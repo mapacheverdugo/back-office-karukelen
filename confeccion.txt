@@ -1,0 +1,3 @@
+Labial,Miel,Cera_de_Abeja,Aceite_de_Coco,Esencia_de_Cacao
+Crema,Miel,Cera_de_Abeja,Base_de_Crema,Vitamina_b
+Aceite,Aceite_de_Oliva,Dedal_de_Oro
