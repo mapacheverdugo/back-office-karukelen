@@ -3,7 +3,7 @@
 import pandas as pd
 
 def menu():
-    opcion = 0
+    opcion = -1
     while (opcion < 0 or opcion > 4):
         print("\n¿Qué acción desea realizar?\n")
         print("1. Ver pedidos\n")
@@ -54,7 +54,7 @@ def hayStock(producto, cantidad):
 
 def reducirStock(producto, cantidad):
     df = pd.read_csv('csv/stock_productos.csv')
-    df.loc[df['Producto'] == producto, 'Cantidad'] -= cantidad
+    df.loc[df['Producto'] == producto, 'Cantidad'] = df.loc[df['Producto'] == producto, 'Cantidad'] - cantidad
     df.to_csv('csv/stock_productos.csv', index=False)
 
 def eliminarPedido(numeroPedido):

@@ -1,19 +1,18 @@
 import pandas as pd
 
 def menu():
-    opcion = 0
-    while (opcion < 1 or opcion > 2):
+    opcion = -1
+    while (opcion < 0 or opcion > 2):
         print("\n¿Qué acción desea realizar?\n")
         print("1. Leer y organizar los archivos\n")
         print("2. Calcular el capital total de la empresa\n")
+        print("0. Volver al menú principal\n")
         opcion = eval(input("Ingrese la opción seleccionada: "))
     
     if (opcion == 1):
         procesarInventario('entrada.txt')
     elif (opcion == 2):
         print("Calcular capital seleccionado")
-    else:
-        print("Error, no existe la opción seleccionada")
 
 # Función que abre el archivo .txt del inventario de la empresa
 # Entrada: El nombre del archivo
