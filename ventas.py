@@ -1,10 +1,22 @@
+# Javier Berrios,
+# Rodrigo Paredes,
+# Tomas Quintana,
+# Carlos Sepúlveda,
+# Héctor Vásquez.
+# Python 3.7 (10 de diciembre, 2018).
+
 # IMPORTACIÓN_DE_FUNCIONES
 
 import pandas as pd
 
+# DEFINICIÓN_DE_FUNCIONES
+
+# Función encargada de ejecutar el menú propio de las ventas
+# Entrada: Sin parámetros de entrada 
+# Salida: Sin valores de retorno
 def menu():
     opcion = -1
-    while (opcion < 0 or opcion > 4):
+    while (opcion < 0 or opcion > 3):
         print("\n¿Qué acción desea realizar?\n")
         print("1. Ver pedidos\n")
         print("2. Procesar pedido\n")
@@ -14,17 +26,28 @@ def menu():
     
     if (opcion == 1):
         mostrarPedidos()
+        menu()
     elif (opcion == 2):
-        print("Calcular capital seleccionado")
+        procesarPedido()
+        menu()
     elif (opcion == 3):
-        print(obtenerMayorPedido)
+        mostrarMayorPedido()
+        menu()
 
+# Función encargada de mostrar todos los pedidos (Opción 1 del menú)
+# Entrada: Sin parámetros de entrada 
+# Salida: Sin valores de retorno
 def mostrarPedidos():
-    df = pd.read_csv('pedidos.csv')
-    print(df)
-    
-def procesarPedido(numeroPedido):
     df = pd.read_csv('csv/pedidos.csv')
+    print(df)
+
+# Función encargada de procesar un pedido (Opción 2 del menú)
+# Entrada: Sin parámetros de entrada 
+# Salida: Sin valores de retorno
+def procesarPedido():
+    df = pd.read_csv('csv/pedidos.csv')
+    mostrarPedidos()
+    numeroPedido = eval(input("Ingrese el número del pedido que quiere procesar: "))
     pedido = df.loc[numeroPedido]
     hayStockDeTodos = True
     for producto, cantidad in pedido.iteritems():
@@ -41,7 +64,10 @@ def procesarPedido(numeroPedido):
     else:
         print('No se pudo procesar el pedido', numeroPedido)
 
-
+# Función que dice si hay stock de un producto
+# Entrada:  [producto] corresponde al producto a comprobar si tiene stock disponible
+#           [cantidad] correponde a la cantidad que debe haber de producto
+# Salida: Devuelve True cuando hay stock del producto y False cuando no
 def hayStock(producto, cantidad):
     df = pd.read_csv('csv/stock_productos.csv')
     filaProducto = df[df['Producto'] == producto]
@@ -52,17 +78,27 @@ def hayStock(producto, cantidad):
     else:
         return False
 
+# Función que disminuye el stock de un producto
+# Entrada:  [producto] corresponde al producto que se reducirá
+#           [cantidad] correponde a la cantidad a reducir del producto
+# Salida: Sin valores de retorno
 def reducirStock(producto, cantidad):
     df = pd.read_csv('csv/stock_productos.csv')
     df.loc[df['Producto'] == producto, 'Cantidad'] = df.loc[df['Producto'] == producto, 'Cantidad'] - cantidad
     df.to_csv('csv/stock_productos.csv', index=False)
 
+# Función que elimina un pedido del archivo de pedidos
+# Entrada: [numeroPedido] corresponde al numero de fila del pedido a eliminar
+# Salida: Sin valores de retorno
 def eliminarPedido(numeroPedido):
     df = pd.read_csv('csv/pedidos.csv')
     df = df.drop(numeroPedido)
     df.to_csv('csv/pedidos.csv', index=False)
 
-def obtenerMayorPedido():
+# Función encargada de mostar el pedido que genera mayor utilidad (Opción 3 del menú)
+# Entrada: Sin parámetros de entrada 
+# Salida: Sin valores de retorno
+def mostrarMayorPedido():
     indexMayor = 0
     valorMayor = 0
     df = pd.read_csv('csv/pedidos.csv')
@@ -75,13 +111,14 @@ def obtenerMayorPedido():
             valorMayor = valorActual
             indexMayor = index
     pedido = df.loc[indexMayor]
-    return pedido
+    print(pedido)
 
+# Función que entrega el precio de un producto
+# Entrada: [producto] corresponde al producto a comprobar su precio
+# Salida: Devuelve el precio del producto
 def obtenerPrecio(producto):
     df = pd.read_csv('csv/precios_productos.csv')
     filaProducto = df[df['Producto'] == producto]
     precio = filaProducto['Precio'].values[0]
     return precio
-
-obtenerMayorPedido()
 

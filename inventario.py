@@ -1,5 +1,19 @@
+# Javier Berrios,
+# Rodrigo Paredes,
+# Tomas Quintana,
+# Carlos Sepúlveda,
+# Héctor Vásquez.
+# Python 3.7 (10 de diciembre, 2018).
+
+# IMPORTACIÓN_DE_FUNCIONES
+
 import pandas as pd
 
+# DEFINICIÓN_DE_FUNCIONES
+
+# Función encargada de ejecutar el menú propio del inventario
+# Entrada: Sin parámetros de entrada 
+# Salida: Sin valores de retorno
 def menu():
     opcion = -1
     while (opcion < 0 or opcion > 2):
@@ -10,13 +24,15 @@ def menu():
         opcion = eval(input("Ingrese la opción seleccionada: "))
     
     if (opcion == 1):
-        procesarInventario('entrada.txt')
+        procesarInventario()
+        menu()
     elif (opcion == 2):
         print("Calcular capital seleccionado")
+        menu()
 
-# Función que abre el archivo .txt del inventario de la empresa
-# Entrada: El nombre del archivo
-# Salida: Una lista de listas que tiene cada sección del archivo separada
+# Función que se encarga de procesar y separar el archivo TXT del inventario en secciones
+# Entrada: [nombre] correponde al nombre del archivo de texto donde está el inventario
+# Salida: Lista de listas que contiene las secciones del inventario separadas línea a línea
 def cargarTxt(nombre):
     secciones = []
     seccion = []
@@ -34,8 +50,10 @@ def cargarTxt(nombre):
 
     return secciones
     
-# Función que crea los archivos .csv del inventario
-# Entrada: Los datos de la sección en una lista, las cabeceras de cada columna y el nombre del archivo a generar
+# Función que crea los archivos CSV del inventario
+# Entrada:  [datos] corresponde a cada sección del inventario
+#           [titulos] corresponde a una lista con los títulos de cada columna
+#           [nombre] corresponde al nombre del archivo que se va a crear
 # Salida: No hay salida de datos
 def crearCsv(datos, titulos, nombre):
     directorio = 'csv/' # Carpeta donde se guardarán los archivos .csv
@@ -47,11 +65,12 @@ def crearCsv(datos, titulos, nombre):
     df = pd.DataFrame(tabla, columns=titulos)
     df.to_csv(directorio + nombre)
 
-# Función encargada de procesar las secciones
-# Entrada: La lista de lista generada por cargarTxt()
-# Salida: No hay salida de datos
-def procesarInventario(nombre):
+# Función que se encarga de procesar todo el inventario (Opción 1 del menú)
+# Entrada: Sin parámetros de entrada 
+# Salida: Sin valores de retorno
+def procesarInventario():
     i = 0
+    nombre = input("Ingrese el nombre del archivo donde esta el inventario: ")
     datosInventario = cargarTxt(nombre)
     nombre = 'archivo.csv' # Nombre del archivo a crear
     titulos = []
@@ -71,7 +90,3 @@ def procesarInventario(nombre):
 
         crearCsv(datosInventario[i], titulos, nombre)
         i = i + 1
-
-
-
-procesarInventario('entrada.txt')
