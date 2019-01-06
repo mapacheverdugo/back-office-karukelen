@@ -57,36 +57,35 @@ def cargarTxt(nombre):
 # Salida: No hay salida de datos
 def crearCsv(datos, titulos, nombre):
     directorio = 'csv/' # Carpeta donde se guardarán los archivos .csv
-    tabla = []
+    tabla = [] # Variable que guardará una lista de listas
     for linea in datos:
-        celdas = linea.split(' ')
-        tabla.append(celdas)
+        celdas = linea.split(' ') # Se separa la linea en cada lugar que haya un espacio
+        tabla.append(celdas) # Se agregan la lista celdas a la lista tablas
 
-    df = pd.DataFrame(tabla, columns=titulos)
-    df.to_csv(directorio + nombre)
+    df = pd.DataFrame(tabla, columns=titulos) # Se crea una tabla CSV con la lista de listas
+    df.to_csv(directorio + nombre) # Se guarda el archivo CSV con los datos de la lista de lista
 
 # Función que se encarga de procesar todo el inventario (Opción 1 del menú)
 # Entrada: Sin parámetros de entrada 
 # Salida: Sin valores de retorno
 def procesarInventario():
     i = 0
-    nombre = input("Ingrese el nombre del archivo donde esta el inventario: ")
+    nombre = input("Ingrese el nombre del archivo donde esta el inventario: ") # Se guardan los cambios en csv/stock_productos.csv
     datosInventario = cargarTxt(nombre)
     nombre = 'archivo.csv' # Nombre del archivo a crear
     titulos = []
-    for seccion in datosInventario:
+    for i, seccion in enumerate(datosInventario):
         if (i == 0):
             nombre = 'ventas_mes.csv'
-            titulos = ['Mes', 'Ventas']
+            titulos = ['Mes', 'Ventas'] # Encabezados para las columnas de ventas por mes
         elif (i == 1):
             nombre = 'precios_productos.csv'
-            titulos = ['Producto', 'Precio']
+            titulos = ['Producto', 'Precio'] # Encabezados para las columnas de precios por producto
         elif (i == 2):
             nombre = 'stock_materia_prima.csv'
-            titulos = ['Materia prima', 'Cantidad']
+            titulos = ['Materia prima', 'Cantidad'] # Encabezados para las columnas stock de las materias prima
         else:
             nombre = 'stock_productos.csv'
-            titulos = ['Producto', 'Cantidad']
+            titulos = ['Producto', 'Cantidad'] # Encabezados para las columnas del stock de los productos
 
         crearCsv(datosInventario[i], titulos, nombre)
-        i = i + 1
