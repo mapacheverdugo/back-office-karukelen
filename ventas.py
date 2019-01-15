@@ -59,8 +59,10 @@ def procesarPedido():
     if (hayStockDeTodos):
         for producto, cantidad in pedido.iteritems():
             if (producto != 'Cliente'): # Se descarta el primer elemento porque corresponde al nombre del cliente
+                precio = obtenerPrecio(producto)
                 reducirStock(producto, cantidad)
-                eliminarPedido(producto)
+                aumentarCapital(cantidad * precio)
+        eliminarPedido(numeroPedido)
     else:
         print('No se pudo procesar el pedido', numeroPedido)
 
@@ -122,3 +124,8 @@ def obtenerPrecio(producto):
     precio = filaProducto['Precio'].values[0] # Guarda el precio del producto
     return precio
 
+def aumentarCapital(valor):
+    df = pd.read_csv('csv/ventas_mes.csv')
+    montoUltimoMes = df.tail(1)['Ventas'].values[0]
+    df.iloc[-1, df.columns.get_loc('Ventas')] = montoUltimoMes + valor # Obtiene el último mes (-1) y modifica la columna 'Ventas'
+    df.to_csv('csv/ventas_mes.csv', index=False) # Se guardan los cambios en csv/ventas_mes.csv

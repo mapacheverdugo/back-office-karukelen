@@ -61,7 +61,7 @@ def reducirMaterias(materias, cantidad):
     df = pd.read_csv('csv/stock_materia_prima.csv') # Abre el archivo csv/stock_materia_prima.csv y lo guarda en forma de tabla
     for materia in materias:
         df.loc[df['Materia prima'] == materia, 'Cantidad'] = df.loc[df['Materia prima'] == materia, 'Cantidad'] - cantidad # Se le resta la cantidad de materia prima
-    df.to_csv('csv/stock_productos.csv', index=False) # Se guardan los cambios en csv/stock_productos.csv
+    df.to_csv('csv/stock_materia_prima.csv', index=False) # Se guardan los cambios en csv/stock_productos.csv
 
 # Función que aumenta el stock de un producto
 # Entrada:  [producto] corresponde al producto que se aumentará

@@ -89,3 +89,15 @@ def procesarInventario():
             titulos = ['Producto', 'Cantidad'] # Encabezados para las columnas del stock de los productos
 
         crearCsv(datosInventario[i], titulos, nombre)
+
+
+def mostrarCapital():
+    capital = capitalEmpresa()
+    print("El capital total de la empresa es de " + str(capital))
+
+def capitalEmpresa():
+    df = pd.read_csv('csv/ventas_mes.csv')
+    capitalAcumulado = 0
+    for index, mes in df.iterrows():
+        capitalAcumulado = capitalAcumulado + mes['Ventas']
+    return capitalAcumulado

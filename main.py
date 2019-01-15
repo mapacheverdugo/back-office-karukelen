@@ -45,7 +45,7 @@ def menuPrincipal():
     elif (opcion == 3):
         ventas.menu()
     elif (opcion == 4):
-        print("Compras seleccionado")
+        compras.menu()
     else:
         print("Error, no existe la opción seleccionada")
 
